@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 	api "github.com/kazak/golanglesson/api"
 	"os"
-	"golang.org/x/net/context"
+	context "context"
 )
 
 func main() {
