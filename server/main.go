@@ -5,7 +5,7 @@ import (
 	"github.com/globalsign/mgo"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"lesson/server/api"
+	api "github.com/kazak/golanglesson/api"
 	"log"
 	"net"
 	context "context"
