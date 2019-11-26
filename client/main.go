@@ -1,8 +1,8 @@
 package main
 
 import (
-	env "github.com/kazak/client/env"
-	service "github.com/kazak/client/services"
+	env "github.com/kazak/golanglesson/client/env"
+	service "github.com/kazak/golanglesson/client/services"
 )
 
 func main() {
