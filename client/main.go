@@ -5,13 +5,13 @@ import (
 	"log"
 	"github.com/pkg/errors"
 	"github.com/kazak/client/env"
-	servioce "github.com/kazak/client/services"
+	service "github.com/kazak/client/services"
 	"os"
 	context "context"
 )
 
 func main() {
-	grpcClient := Ssrvice.ConnectGRPC()
+	grpcClient := service.ConnectGRPC()
 	stream, err := grpcClient.Upload(context.Background())
 
 	file, err := os.Open(env.Settings.FileName)
