@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	service.ConnectGRPC(env.Settings.Api)
-	service.UploadFile(env.Settings.FileName)
+	grpcService := service.Connect(env.Settings.Api.Host, env.Settings.Api.Port)
+	grpcService.UploadFile(env.Settings.FileName)
 }

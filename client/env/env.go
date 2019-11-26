@@ -2,7 +2,6 @@ package env
 
 import (
 	"github.com/spf13/viper"
-	"time"
 )
 
 type Config struct {
@@ -29,7 +28,7 @@ func init() {
 		FileName: viper.GetString("FILE_NAME"),
 		Api: &grpcClientConnConfig{
 			Host: viper.GetString("GRPC_HOST"),
-			Port: viper.GetString("GRPC_PORT"),
+			Port: viper.GetInt("GRPC_PORT"),
 		},
 	}
 }

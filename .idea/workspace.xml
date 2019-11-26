@@ -24,7 +24,7 @@
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lesson/server/files" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lesson/server" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -33,8 +33,8 @@
       <recent name="$PROJECT_DIR$/client" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../lesson/server/files" />
       <recent name="$PROJECT_DIR$/../lesson/server" />
+      <recent name="$PROJECT_DIR$/../lesson/server/files" />
       <recent name="$PROJECT_DIR$/dataFiles/var/files" />
     </key>
   </component>

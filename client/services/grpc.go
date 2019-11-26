@@ -11,37 +11,30 @@ import (
 	context "context"
 )
 
-type gRPCSettings struct {
-	Host string
-	Port int
-}
-
-type grpcServiceInterface interface {
-	ConnectGRPC(settings gRPCSettings)
+type GrpcServiceInterface interface {
 	UploadFile(file string)
 }
 
-type GrpcService struct {
+type grpcService struct {
 	client api.StreamServiceClient
 }
 
-func (service GrpcService) ConnectGRPC(settings gRPCSettings) {
+func Connect(host string, port int) GrpcServiceInterface {
 	conn, err := grpc.Dial(
-		fmt.Sprintf("%v:%v", settings.Host, settings.Port),
+		fmt.Sprintf("%v:%v", host, port),
 		grpc.WithInsecure(),
 	)
 	if  err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close()
-
-	service.client = api.NewStreamServiceClient(conn)
+	return &grpcService{
+		client: api.NewStreamServiceClient(conn),
+	}
 }
 
-func (service GrpcService) UploadFile(file string) {
+func (service *grpcService) UploadFile(file string) {
 
 	stream, err := service.client.Upload(context.Background())
-
 	data, err := os.Open(file)
 
 	if err != nil {
@@ -51,21 +44,28 @@ func (service GrpcService) UploadFile(file string) {
 	defer data.Close()
 
 	buffer := make([]byte, 1024)
-	writing := false
+	writing := true
 	count := 0
+	fmt.Println("start to upload file")
 
 	for writing {
 		count, err = data.Read(buffer)
+
 		if err != nil {
 			if err == io.EOF {
 				writing = false
 				err = nil
 				continue
+				fmt.Println("file loaded")
 			}
 
-			err = errors.Wrapf(err, "errored while copying from file to buf")
+			errorMessage := "errored while copying from file to buf"
+			err = errors.Wrapf(err, errorMessage)
+			fmt.Println(errorMessage)
+
 			return
 		}
+		fmt.Println("chunk sending...")
 
 		err = stream.Send(&api.Chunk{
 			Content: buffer[:count],

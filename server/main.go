@@ -1,44 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"github.com/globalsign/mgo"
+	"github.com/kazak/golanglesson/service/services"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
-	api "github.com/kazak/golanglesson/api"
-	"log"
-	"net"
-	context "context"
+	env "github.com/kazak/golanglesson/server/env"
 )
 
-type repository interface {
-	Upload(ctx context.Context, opts ...grpc.CallOption) (api.streamServiceUploadClient, error)
-}
-
-type service struct {
-	repo repository
-}
-
-func (s *service) Upload(ctx context.Context, req *api.Request) (*api.streamServiceUploadClient, error) {
-
-}
-
 func main() {
-	address := fmt.Sprintf("%v:%v", "localhost", 27017)
-	mongoConn, _ := mgo.Dial(address)
-
-	_ = mongoConn.DB("test")
-
-	lis, err := net.Listen("tcp", PortTOConnect)
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	server := grpc.NewServer()
-	api.RegisterStreamServiceServer(server, &service{rep})
-
-	// Register to response gRPC.
-	reflection.Register(server)
-	if err := server.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+	_, _ = services.MongoConnect(env.Settings.MngoDB.Host, env.Settings.MngoDB.Port, env.Settings.MngoDB.DB)
+	services.StartGRPCServer(env.Settings.Api.Port, repository)
 }
