@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kazak/client/env"
+	env "github.com/kazak/client/env"
 	service "github.com/kazak/client/services"
 )
 
