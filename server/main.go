@@ -19,6 +19,10 @@ type service struct {
 	repo repository
 }
 
+func (s *service) Upload(ctx context.Context, req *api.Request) (*api.streamServiceUploadClient, error) {
+
+}
+
 func main() {
 	address := fmt.Sprintf("%v:%v", "localhost", 27017)
 	mongoConn, _ := mgo.Dial(address)

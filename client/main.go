@@ -3,24 +3,18 @@ package main
 import (
 	"io"
 	"log"
-	"google.golang.org/grpc"
 	"github.com/pkg/errors"
-	api "github.com/kazak/golanglesson/api"
+	"github.com/kazak/client/env"
+	servioce "github.com/kazak/client/services"
 	"os"
 	context "context"
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
-	if  err != nil {
-		log.Fatal(err)
-	}
-	defer conn.Close()
-
-	grpcClient := api.NewStreamServiceClient(conn)
+	grpcClient := Ssrvice.ConnectGRPC()
 	stream, err := grpcClient.Upload(context.Background())
 
-	file, err := os.Open("files/googlechrome.dmg")
+	file, err := os.Open(env.Settings.FileName)
 
 	if err != nil {
 		log.Fatalf("failed opening file: %s", err)
@@ -53,5 +47,4 @@ func main() {
 			return
 		}
 	}
-
 }
